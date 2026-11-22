@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة النصوص الأدبية | الصف الأول الثانوي - عبدالرحمن عبدالله</title>
+    <!-- تحميل مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تحميل خطوط عربية أصيلة وعصرية (Amiri للنصوص الأدبية و Cairo للواجهة) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        serif: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#0c4a6e',
+                            900: '#082f49',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#d97706',
+                            600: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* تخصيصات جمالية إضافية */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .literary-text {
+            font-family: 'Amiri', serif;
+            line-height: 2.3;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* إخفاء شريط التمرير مع الحفاظ على وظيفته */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-amber-500/30">
+
+    <!-- الشريط العلوي الثابت (Header) -->
+    <header class="sticky top-0 z-50 glass-nav bg-white/85 dark:bg-slate-900/85 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- الشعار والعنوان -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-900 text-white flex items-center justify-center shadow-md font-serif text-2xl font-bold">
+                    ض
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-tight">
+                        النصوص الأدبية المقررة
+                    </h1>
+                    <p class="text-xs text-amber-600 dark:text-amber-400 font-semibold">
+                        الصف الأول الثانوي • إعداد: عبدالرحمن عبدالله
+                    </p>
+                </div>
+            </div>
+
+            <!-- أدوات التحكم (حجم الخط + الوضع الليلي) -->
+            <div class="flex items-center gap-2">
+                <!-- تصغير/تكبير الخط -->
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700" title="التحكم في حجم خط النص">
+                    <button onclick="changeFontSize(-1)" class="px-2.5 py-1 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-slate-700 transition" aria-label="تصغير الخط">أ-</button>
+                    <span class="px-1.5 text-xs text-slate-400">|</span>
+                    <button onclick="changeFontSize(1)" class="px-2.5 py-1 text-sm font-bold rounded-lg hover:bg-white dark:hover:bg-slate-700 transition" aria-label="تكبير الخط">أ+</button>
+                </div>
+
+                <!-- زر الوضع الليلي/النهاري -->
+                <button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition text-slate-700 dark:text-amber-400" aria-label="تبديل المظهر">
+                    <svg id="sunIcon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- شريط اختيار الدرس (التبويبات الرئيسية) -->
+        <div class="bg-slate-100/80 dark:bg-slate-900/50 border-t border-slate-200/70 dark:border-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-3">
+                    <button id="tab-lesson1" onclick="switchLesson('lesson1')" class="lesson-tab active px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 bg-primary-700 text-white shadow-md">
+                        <span>١. ابدأ بنفسك</span>
+                        <span class="hidden md:inline text-xs font-normal opacity-80">(شعر الحكمة)</span>
+                    </button>
+                    <button id="tab-lesson2" onclick="switchLesson('lesson2')" class="lesson-tab px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700">
+                        <span>٢. آداب صناعة الكُتّاب</span>
+                        <span class="hidden md:inline text-xs font-normal opacity-80">(نثر / رسائل)</span>
+                    </button>
+                </div>
+
+                <!-- شريط البحث السريع -->
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="ابحث في المفردات أو الجماليات..." class="w-full pr-10 pl-4 py-2 text-sm rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition">
+                    <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        
+        <!-- شريط التنقل السريع بين أقسام الدرس -->
+        <nav class="flex overflow-x-auto no-scrollbar gap-2 pb-4 mb-6 border-b border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-semibold">
+            <a href="#sec-text" class="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 transition">📜 النص الأدبي</a>
+            <a href="#sec-author" class="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 transition">👤 التعريف بالأديب وسماته</a>
+            <a href="#sec-ideas" class="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 transition">💡 الفكرة والمغزى وسمات النص</a>
+            <a href="#sec-vocab" class="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 transition">📖 أهم المفردات</a>
+            <a href="#sec-aesthetics" class="shrink-0 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500 transition">✨ الجماليات والأساليب والبديع</a>
+            <a href="#sec-quiz" class="shrink-0 px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 transition">🎯 تدريبات تفاعلية</a>
+        </nav>
+
+        <!-- حاوية عرض الدرس الديناميكية -->
+        <div id="lessonContainer" class="space-y-8 animate-fade-in">
+            <!-- يتم حقن المحتوى هنا عبر JavaScript -->
+        </div>
+
+    </main>
+
+    <!-- تذييل الصفحة (Footer) مع حقوق الملكية الفكرية -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
+            <div>
+                <p class="text-sm font-bold text-slate-800 dark:text-slate-200">
+                    جميع الحقوق محفوظة &copy; 2026 <span class="text-primary-600 dark:text-amber-400 font-extrabold">عبدالرحمن عبدالله</span>
+                </p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    المحتوى العلمي مستخرج ومراجع بدقة من المنهج المقرر للصف الأول الثانوي (كتاب كيان في اللغة العربية).
+                </p>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-xl">
+                <span>تصميم وتطوير:</span>
+                <span class="font-bold text-slate-800 dark:text-white">عبدالرحمن عبدالله</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- قاعدة بيانات النصوص والشروحات والأسئلة -->
+    <script>
+        const lessonsData = {
+            lesson1: {
+                id: 'lesson1',
+                badge: 'النص الأول • العصر الأموي (شعر الحكمة)',
+                title: 'ابدأ بنفسك',
+                subtitle: 'للشاعر والعالم النحوي: أبي الأسود الدؤلي',
+                textType: 'poetry',
+                verses: [
+                    { num: '١', first: 'حَسَدُوا الفَتَى إِذْ لَمْ يَنَالُوا سَعْيَهُ', second: 'فَالْقَوْمُ أَعْدَاءٌ لَهُ وَخُصُومُ' },
+                    { num: '٢', first: 'فَاتْرُكْ مُجَارَاةَ السَّفِيهِ فَإِنَّهَا', second: 'نَدَمٌ وَغِبٌّ بَعْدَ ذَاكَ وَخِيمُ' },
+                    { num: '٣', first: 'وَإِذَا عَتِبْتَ عَلَى السَّفِيهِ وَلُمْتَهُ', second: 'فِي مِثْلِ مَا تَأْتِي فَأَنْتَ ظَلُومُ' },
+                    { num: '٤', first: 'يَا أَيُّهَا الرَّجُلُ الْمُعَلِّمُ غَيْرَهُ', second: 'هَلَّا لِنَفْسِكَ كَانَ ذَا التَّعْلِيمُ' },
+                    { num: '٥', first: 'تَصِفُ الدَّوَاءَ لِذِي السَّقَامِ وَذِي الضَّنَى', second: 'كَيْمَا يَصِحَّ بِهِ وَأَنْتَ سَقِيمُ' },
+                    { num: '٦', first: 'وَأَرَاكَ تُصْلِحُ بِالرَّشَادِ عُقُولَنَا', second: 'أَبَدًا وَأَنْتَ مِنَ الرَّشَادِ عَقِيمُ' },
+                    { num: '٧', first: 'لَا تَنْهَ عَنْ خُلُقٍ وَتَأْتِيَ مِثْلَهُ', second: 'عَارٌ عَلَيْكَ إِذَا فَعَلْتَ عَظِيمُ' },
+                    { num: '٨', first: 'ابْدَأْ بِنَفْسِكَ فَانْهَهَا عَنْ غَيِّهَا', second: 'فَإِذَا انْتَهَتْ عَنْهُ فَأَنْتَ حَكِيمُ' },
+                    { num: '٩', first: 'فَهُنَاكَ يُقْبَلُ مَا وَعَظْتَ وَيُقْتَدَى', second: 'بِالْعِلْمِ مِنْكَ وَيَنْفَعُ التَّعْلِيمُ' }
+                ],
+                author: {
+                    role: 'التعريف بالشاعر وسماته',
+                    name: 'أبو الأسود الدؤلي (ظالم بن عمرو بن سفيان الدؤلي)',
+                    lifespan: '١٦ ق.هـ – ٦٩ هـ',
+                    bio: [
+                        'من سادات التابعين وأعيانهم وفقهائهم وشعرائهم ومحدثيهم.',
+                        'نحويٌّ عالم وضع أصول علم النحو، وشكَّل أحرف المصحف الشريف، ووضع النقاط على الأحرف العربية، ويُلقَّب بـ «مَلِك النحو».',
+                        'وُلد قبل بعثة النبي ﷺ وآمن به لكنه لم يره، وصحب الإمام علي بن أبي طالب رضي الله عنه.'
+                    ],
+                    traits: ['حكيم مجرِّب', 'فصيح بليغ', 'محبٌّ للنصح والإرشاد', 'حريص على مطابقة القول للعمل']
+                },
+                mainIdea: {
+                    occasion: 'ينتمي النص إلى العصر الأموي، وهو من شعر الحكمة الذي يدور حول جملة من الحكم التي تُصلح حياة الإنسان، ويعكس ذكاء العرب وحسن تفكيرهم وخبراتهم.',
+                    core: 'ضرورة تهذيب النفس وإصلاحها قبل وعظ الآخرين وتوجيههم؛ حتى يصبح الإنسان قدوة صالحة يُقتدى بعلمه وتُقبل نصيحته.',
+                    moral: 'ترسيخ مبدأ القدوة الصالحة ومطابقة القول للفعل، وتنفير الإنسان من التناقض بين وعظ الناس وسلوك النفس، مع الدعوة لترك مجاراة السفهاء تجنبًا للندم والعواقب الوخيمة.'
+                },
+                textTraits: [
+                    'سهولة الألفاظ ووضوح دلالتها ومناسبتها للمعاني (ألفاظ قليلة تحمل معاني كثيرة).',
+                    'جمال الصياغة وتنوع الأسلوب بين الخبر والإنشاء لإثارة الذهن.',
+                    'قلة الصور الخيالية والمحسنات البديعية؛ لأن الشاعر يهدف إلى الإقناع العقلي لا التأثير العاطفي.',
+                    'الإقناع بمطابقة الأقوال للأفعال وربط الأسباب بمسبباتها.',
+                    'التأثر بالقرآن الكريم والحديث الشريف في المعاني والأساليب والصور (مثل البيت السابع المتأثر بقوله تعالى: ﴿أَتَأْمُرُونَ النَّاسَ بِالْبِرِّ وَتَنسَوْنَ أَنفُسَكُمْ﴾ [البقرة: ٤٤]).'
+                ],
+                vocab: [
+                    { word: 'حسدوا', meaning: 'تمنوا زوال نعمة غيرهم' },
+                    { word: 'سعيه', meaning: 'كسبه وعمله ومكانته' },
+                    { word: 'مجاراة', meaning: 'مصاحبة ومسايرة ومماشاة' },
+                    { word: 'السفيه', meaning: 'سيئ التصرف، الأحمق' },
+                    { word: 'ندم', meaning: 'أسف وحسرة' },
+                    { word: 'غِبّ', meaning: 'عاقبة ونهاية' },
+                    { word: 'وخيم', meaning: 'سيئ وضار' },
+                    { word: 'عتبت', meaning: 'لمت' },
+                    { word: 'تأتي', meaning: 'تفعل وترتكب' },
+                    { word: 'هلّا', meaning: 'أداة للحض والحث والتوبيخ' },
+                    { word: 'ذي', meaning: 'صاحب' },
+                    { word: 'السقام', meaning: 'المرض' },
+                    { word: 'الضنى', meaning: 'التعب الشديد والمرض' },
+                    { word: 'يصح', meaning: 'يبرأ ويشفى' },
+                    { word: 'سقيم', meaning: 'مريض' },
+                    { word: 'الرشاد', meaning: 'الهدى والاستقامة' },
+                    { word: 'عقيم', meaning: 'المراد: لا خير فيه، محروم' },
+                    { word: 'عار', meaning: 'عيب وخزي' },
+                    { word: 'غيّها', meaning: 'ضلالها وانحرافها' },
+                    { word: 'وعظت', meaning: 'نصحت' },
+                    { word: 'يُقتدى', meaning: 'يُفعل مثله ويُتَّبع' }
+                ],
+                aesthetics: {
+                    bayan: [
+                        { type: 'استعارة مكنية', quote: 'تُصْلِحُ بِالرَّشَادِ عُقُولَنَا', explanation: 'استعارتان مكنيتان: شبَّه العقول بشيء مادي يُصلح، وشبَّه الرشاد بأداة للإصلاح (سر الجمال: التجسيم).' },
+                        { type: 'استعارة مكنية', quote: 'انْهَهَا عَنْ غَيِّهَا / انْتَهَتْ', explanation: 'شبَّه النفس بإنسان يُنهى ويستجيب للنهي (سر الجمال: التشخيص).' },
+                        { type: 'استعارة مكنية', quote: 'يُقْتَدَى بِالْعِلْمِ', explanation: 'شبَّه العلم بإنسان يُقتدى به (سر الجمال: التشخيص).' },
+                        { type: 'استعارة مكنية', quote: 'تَصِفُ الدَّوَاءَ لِذِي السَّقَامِ', explanation: 'شبَّه المعلم غيره بطبيب يصف العلاج (سر الجمال: التوضيح).' },
+                        { type: 'استعارة تصريحية', quote: 'الدَّوَاءَ / ذِي السَّقَامِ', explanation: 'صوَّر النصائح والإرشادات بالدواء (التجسيم)، وصوَّر الجاهل بالمريض المحتاج للعلاج (التوضيح).' },
+                        { type: 'كناية', quote: 'البيتان الثاني والثالث', explanation: 'كناية عن صفة الاستقامة والبعد عن مجاراة السفهاء (الثاني)، وكناية عن صفة العدل والإنصاف (الثالث).' },
+                        { type: 'كناية', quote: 'الأبيات الخامس والسابع والتاسع', explanation: 'كناية عن فساد الرأي والحماقة (الخامس)، وكناية عن الاتزان في التصرف (السابع)، وكناية عن تأثير القدوة الصالحة في الناس (التاسع).' }
+                    ],
+                    badi: [
+                        { type: 'طباق إيجاب', quote: '(الدواء - السقام) / (يصح - سقيم) / (تنه - تأتي) / (ابدأ - انتهت) / (غيره - لنفسك)', explanation: 'يؤكد المعنى ويوضحه ويقويه بالتضاد.' },
+                        { type: 'جناس غير تام', quote: '(الْعِلْمِ - التَّعْلِيمُ)', explanation: 'يعطي جرسًا موسيقيًا جميلًا يجذب الانتباه ويثير الذهن.' }
+                    ],
+                    maani: [
+                        { type: 'أساليب إنشائية', quote: 'فاترك مجاراة السفيه / ابدأ بنفسك فانهها', explanation: 'أسلوب إنشائي نوعه أمر غرضه النصح والإرشاد والحث.' },
+                        { type: 'أساليب إنشائية', quote: 'يا أيها الرجل / هلا لنفسك / لا تنه', explanation: 'نداء للتنبيه وإثارة الذهن، وتحضيض يفيد الحث والنصح، ونهي للنصح والتحذير.' },
+                        { type: 'أسلوب قصر', quote: 'تُصْلِحُ بِالرَّشَادِ عُقُولَنَا', explanation: 'قصر بتقديم الجار والمجرور (بالرشاد) على المفعول به للتخصيص والتوكيد.' },
+                        { type: 'إيجاز وإطناب', quote: 'تأتي / (أعداء - خصوم) و(عتبت - لمت)', explanation: 'حذف المفعول به في (تأتي) للعموم والشمول؛ وإطناب بالترادف في (أعداء وخصوم) و(عتبت ولمت) للتوكيد.' },
+                        { type: 'إيحاءات الألفاظ', quote: 'ندم، غِبّ، وخيم / ظلوم / إذ لم ينالوا سعيه', explanation: 'نكرات للتنفير والتهويل، و(ظلوم) صيغة مبالغة ونكرة للتحقير، و(إذ لم ينالوا...) تعليل لما قبلها.' }
+                    ]
+                },
+                quiz: [
+                    {
+                        q: 'ما القيمة الفنية للنداء في قول الشاعر: «يَا أَيُّهَا الرَّجُلُ الْمُعَلِّمُ غَيْرَهُ»؟',
+                        options: [
+                            'التعظيم لدور العلم في تنشئة رجال ذوي خلق.',
+                            'استنكار عدم تطبيق ما تنادي به على نفسك أولًا.',
+                            'نفي تعليم الإنسان لغيره صفات الخساسة والدناءة.',
+                            'التنبيه إلى ضرورة الاتصاف بشيم الرجال المخلصين.'
+                        ],
+                        correct: 1,
+                        explanation: 'النداء هنا للتنبيه واستنكار تناقض الرجل الذي يعلم الناس الفضيلة وينسى نفسه.'
+                    },
+                    {
+                        q: 'حدد نوع الصورة البيانية في كلمة «الدَّوَاءَ» في البيت الخامس:',
+                        options: [
+                            'استعارة مكنية.',
+                            'استعارة تصريحية.',
+                            'كناية عن صفة.',
+                            'مجاز مرسل.'
+                        ],
+                        correct: 1,
+                        explanation: 'استعارة تصريحية حيث صوَّر النصائح والإرشادات بالدواء وحذف المشبه وصرَّح بالمشبه به، وسر جمالها التجسيم.'
+                    },
+                    {
+                        q: 'ما علاقة قول الشاعر: «إِذْ لَمْ يَنَالُوا سَعْيَهُ» بما قبلها في البيت الأول؟',
+                        options: [
+                            'نتيجة.',
+                            'تفصيل.',
+                            'تعليل.',
+                            'إجمال.'
+                        ],
+                        correct: 2,
+                        explanation: 'تعليل؛ لأن سبب حسد القوم للفتى هو عجزهم عن الوصول إلى مكانته وكسبه.'
+                    },
+                    {
+                        q: 'علل: قلة الصور الخيالية والمحسنات البديعية في نص «ابدأ بنفسك»:',
+                        options: [
+                            'لضعف شاعرية أبي الأسود الدؤلي.',
+                            'لأن الشاعر يهدف إلى الإقناع العقلي لا التأثير العاطفي.',
+                            'لأن النص ينتمي إلى العصر الجاهلي.',
+                            'لأن القصيدة من شعر الرثاء الحزين.'
+                        ],
+                        correct: 1,
+                        explanation: 'شعر الحكمة يعتمد على مخاطبة العقل والإقناع بالمنطق والحجة لا إثارة العاطفة.'
+                    }
+                ]
+            },
+
+            lesson2: {
+                id: 'lesson2',
+                badge: 'النص الثاني • العصر الأموي (فن الرسائل الديوانية)',
+                title: 'آداب صناعة الكُتّاب',
+                subtitle: 'للكاتب البليغ: عبد الحميد بن يحيى الكاتب',
+                textType: 'prose',
+                paragraphs: [
+                    '«أما بعد، حَفِظَكُمُ اللهُ يا أهلَ صِنَاعَةِ الكتابةِ، فليس أحدٌ من أهلِ الصناعاتِ كُلِّهَا أَحْوَجَ إلى اجتماعِ خِلالِ الخَيْرِ الْمَحْمُودَةِ وخِصَالِ الفضلِ المذكورةِ المعدودةِ منكم - أيها الكُتّابُ - إذا كنتم على ما يأتي في هذا الكتابِ من صفتكم.',
+                    'فإن الكاتبَ يحتاجُ من نفسه ويحتاجُ منه صاحبُه الذي يثقُ به في مهماتِ أموره أن يكونَ حليمًا في موضعِ الحلمِ، فهيمًا في موضعِ الحكمِ، مِقدامًا في موضعِ الإقدامِ، ومُحجِمًا في موضعِ الإحجامِ، مُؤثِرًا العفافَ والعدلَ والإنصافَ، كتومًا للأسرارِ، وفيًّا عند الشدائدِ، عالمًا بما يأتي من النوازلِ، يضعُ الأمورَ مواضعَها والطوارقَ في أماكنها، قد نظرَ في كل فنٍّ من فنونِ العلمِ فأحكمه، وإن لم يُحكمه أخذ منه بمقدارِ ما يكتفي به، يعرفُ بغريزةِ عقله وحسنِ أدبه وفضلِ تجربته ما يردُ عليه قبل وروده، وعاقبةَ ما يصدرُ عنه قبل صدوره، فيُعدُّ لِكُلِّ أمرٍ عُدَّتَه وعتادَه، ويُهيِّئُ لكل وجهٍ هيئتَه وعادتَه.',
+                    'واروُوا الأشعارَ واعرفوا غريبَها ومعانيَها، وأيَّامَ العربِ والعَجَمِ وأحاديثَها وسِيَرَها؛ فإنَّ ذلك مُعِينٌ لكم على ما تَسْمُو إليه هِمَمُكُم، ونزِّهوا - مَعْشَرَ الكُتّابِ - صِنَاعَتَكم عن الدناءةِ، واربَئُوا بأنفسكم عن السعايةِ والنميمةِ وما فيه أهلُ الجهالاتِ، فإن العيبَ إليكم - معشرَ الكُتّابِ - أسرعُ منه إلى القُرّاءِ، وهو لكم أفسدُ منه لهم. والسلام عليكم ورحمة الله وبركاته».'
+                ],
+                author: {
+                    role: 'التعريف بالكاتب وسماته',
+                    name: 'عبد الحميد بن يحيى الكاتب',
+                    lifespan: 'توفي سنة ١٣٢ هـ',
+                    bio: [
+                        'مولى من أهل الشام (أي من أهل البلاد الأصليين الذين دخلوا في الإسلام، فليس عربي الأصل).',
+                        'كان كاتبًا لمروان بن محمد آخر خلفاء بني أمية، وهو أول من أطال الرسائل واستعمل التحميدات في بدايتها.',
+                        'ضُرب به المثل في الفصاحة والبلاغة في فن الرسائل حتى قيل: «بُدئت الكتابة بعبد الحميد وخُتمت بابن العميد».'
+                    ],
+                    traits: ['حكيم وشجاع وعادل', 'واسع الثقافة', 'يحب مهنته ويرفع مكانتها', 'عزيز النفس ويعالج فنه في أناة وتؤدة']
+                },
+                mainIdea: {
+                    occasion: 'ينتمي النص إلى فن الرسائل الديوانية في العصر الأموي؛ وفيه يُظهر الكاتب لزملائه الكُتّاب منزلتهم الرفيعة وقيمة مهنتهم العظيمة، ويوجه لهم نصائح تنفعهم في حياتهم.',
+                    core: 'بيان مكانة مهنة الكتابة وأهميتها، وتحديد الصفات الأخلاقية والعقلية والثقافية الواجب توافرها في الكاتب.',
+                    moral: 'الارتقاء بمستوى الكُتّاب أخلاقيًا وعلميًا، والتنبيه على خطورة مهنة الكتابة ومسؤوليتها؛ لأن العيب والخطأ إلى الكاتب أسرع وأشد فسادًا من غيره.'
+                },
+                textTraits: [
+                    'سهولة الألفاظ وخلوها من الغريب المتكلف.',
+                    'وضع المعاني وتزيينها وتقريبها والارتقاء بها، والعناية بترتيب الأفكار وتسلسلها.',
+                    'الميل إلى الإطناب عن طريق الترادف والتكرار لتوضيح المعنى وتأكيده.',
+                    'قلة الصور الخيالية؛ لأن الهدف هو الإقناع العقلي والتوجيه المهني.',
+                    'الإيقاع الموسيقي النابع من التناسق اللفظي في الجمل والفقرات والإتيان بالسجع غير المتكلف في موضعه.',
+                    'عدم المبالغة في الاقتباس من معاني القرآن، والبدء بالدعاء والختام بالسلام تأثرًا بروح الإسلام.'
+                ],
+                vocab: [
+                    { word: 'خِلال', meaning: 'خصال وصفات (مفردها: خَلّة)' },
+                    { word: 'المعدودة', meaning: 'المعروفة والمشهورة' },
+                    { word: 'يأتي', meaning: 'يُذكر مفضلًا' },
+                    { word: 'موضع الحكم', meaning: 'حين إصدار الحكم واتخاذ القرار' },
+                    { word: 'مِقدامًا', meaning: 'جريئًا شجاعًا' },
+                    { word: 'مُحجِمًا', meaning: 'ممتنعًا ومتراجعًا بحكمة' },
+                    { word: 'الإنصاف', meaning: 'المعاملة بالعدل' },
+                    { word: 'النوازل', meaning: 'المصائب الشديدة' },
+                    { word: 'عاقبة', meaning: 'نتيجة وأثر' },
+                    { word: 'يَرِد', meaning: 'يحضر ويقع' },
+                    { word: 'العُدّة', meaning: 'الاستعداد' },
+                    { word: 'أيام العرب', meaning: 'وقائعهم وحروبهم' },
+                    { word: 'العجم', meaning: 'غير العرب' },
+                    { word: 'السِّيَر', meaning: 'تاريخ حياة الشخصية' },
+                    { word: 'نزّهوا', meaning: 'أبعدوا' },
+                    { word: 'الدناءة', meaning: 'الخسة والنقص' },
+                    { word: 'اربَئُوا', meaning: 'نزّهوا وارفَعوا أنفسكم' },
+                    { word: 'النميمة', meaning: 'الوقيعة والوشاية بين الناس' },
+                    { word: 'الجهالات', meaning: 'السفاهات والحماقات' }
+                ],
+                aesthetics: {
+                    bayan: [
+                        { type: 'تشبيه بليغ', quote: 'صِنَاعَةِ الكتابةِ', explanation: 'شبَّه الكتابة بالصناعة (سر الجمال: التوضيح)، ويوحي بضرورة بذل الجهد للارتقاء بها وتجويدها.' },
+                        { type: 'تشبيه بليغ', quote: 'بِغَرِيزَةِ عَقْلِهِ', explanation: 'تشبيه للعقل بالغريزة (سر الجمال: التوضيح).' },
+                        { type: 'استعارة مكنية', quote: 'أَخَذَ مِنْهُ بِمِقْدَارِ مَا يُكْتَفَى بِهِ', explanation: 'صوَّر فنون العلم بكنز يُؤخذ منه (سر الجمال: التجسيم).' },
+                        { type: 'استعارة مكنية', quote: 'يَأْتِي مِنَ النَّوَازِلِ / الْعَيْبَ إِلَيْكُمْ أَسْرَعُ / تَسْمُو إِلَيْهِ هِمَمُكُمْ', explanation: 'صوَّر النوازل بإنسان يأتي، وصوَّر العيب بإنسان يسرع إلى الكُتّاب، وصوَّر الهمم بأشخاص تسمو (سر الجمال: التشخيص).' },
+                        { type: 'كناية', quote: 'مِقدامًا في موضع الإقدام ومحجمًا في موضع الإحجام', explanation: 'كناية عن التمكن والجرأة وحسن التصرف.' },
+                        { type: 'كناية', quote: 'يضع الأمور في مواضعها / فيُعدّ لكل أمر عدّته وعتاده', explanation: 'كناية عن التعقل وحسن التدبير والحكمة، وكناية عن شدة الاهتمام والاحتياط.' }
+                    ],
+                    badi: [
+                        { type: 'طباق', quote: '(الإقدام - الإحجام) / (وروده - صدوره) / (مقدامًا - محجمًا) / (العرب - العجم) / (أحكمه - لم يُحكمه)', explanation: 'طباق إيجاب وطباق سلب يؤكد المعنى ويوضحه.' },
+                        { type: 'مقابلة', quote: 'مَا يَرِدُ عَلَيْهِ قَبْلَ وُرُودِهِ - مَا يَصْدُرُ عَنْهُ قَبْلَ صُدُورِهِ', explanation: 'مقابلة تؤكد المعنى وتوضحه بالتضاد.' },
+                        { type: 'سجع وازدواج', quote: 'حليمًا في موضع الحلم، فهيمًا في موضع الحكم... / يضع الأمور مواضعها والطوارق في أماكنها', explanation: 'يعطي جرسًا موسيقيًا يطرب الأذن ويريح النفس دون تكلف.' },
+                        { type: 'جناس ناقص', quote: '(الْحِلْمِ - الْحُكْمِ) / (عُدَّتَهُ - عَتَادَهُ - هَيْئَتَهُ - عَادَتَهُ)', explanation: 'يعطي جرسًا موسيقيًا يطرب الأذن.' }
+                    ],
+                    maani: [
+                        { type: 'أساليب إنشائية', quote: 'ارووا الأشعار / اعرفوا غريبها / نزّهوا صناعتكم / اربئوا بأنفسكم', explanation: 'أساليب أمر غرضها النصح والإرشاد.' },
+                        { type: 'أساليب إنشائية', quote: 'يا أهل صناعة الكتابة / أيها الكُتّاب / معشر الكُتّاب', explanation: 'نداء للتنبيه والتعظيم وإظهار الحب للكُتّاب (وحُذفت أداة النداء في معشر الكُتّاب للإيجاز).' },
+                        { type: 'خبري لفظًا إنشائي معنى', quote: 'حَفِظَكُمُ اللهُ / والسلام عليكم ورحمة الله وبركاته', explanation: 'غرضه الدعاء للكُتّاب، ويوحي بتأثر الكاتب بروح الإسلام.' },
+                        { type: 'توكيد وقصر', quote: 'أهل الصناعات كلها / ما تسمو إليه هممكم / فإن العيب إليكم أسرع', explanation: 'توكيد معنوي بـ (كلها)، وتوكيد بـ (إنّ)، وأساليب قصر بتقديم الجار والمجرور للتخصيص والتوكيد.' },
+                        { type: 'إيجاز وإطناب', quote: 'يُكتفى / (اجتماع خلال الخير المحمودة وخصال الفضل المذكورة المعدودة)', explanation: 'إيجاز بحذف الفاعل في (يُكتفى)، وإطناب بالترادف بين (العدل - الإنصاف) و(السعاية - النميمة) للتوكيد.' }
+                    ]
+                },
+                quiz: [
+                    {
+                        q: 'ما غرض الأمر في قول الكاتب: «نَزِّهُوا صِنَاعَتَكُمْ عَنِ الدَّنَاءَةِ»؟',
+                        options: [
+                            'التمني.',
+                            'النصح والإرشاد.',
+                            'التحذير والتهديد.',
+                            'التعجيز.'
+                        ],
+                        correct: 1,
+                        explanation: 'أسلوب إنشائي نوعه أمر غرضه النصح والإرشاد لحفظ كرامة مهنة الكتابة.'
+                    },
+                    {
+                        q: 'ما علاقة قول الكاتب: «فَإِنَّ الْعَيْبَ إِلَيْكُمْ أَسْرَعُ مِنْهُ إِلَى الْقُرَّاءِ» بما قبلها؟',
+                        options: [
+                            'نتيجة.',
+                            'تعليل.',
+                            'تفصيل.',
+                            'إجمال.'
+                        ],
+                        correct: 1,
+                        explanation: 'تعليل لطلبه منهم تنزيه صناعتهم والترفع عن السعاية والنميمة.'
+                    },
+                    {
+                        q: 'ما نوع الصورة البيانية في قوله: «تَسْمُو إِلَيْهِ هِمَمُكُمْ»؟',
+                        options: [
+                            'تشبيه بليغ.',
+                            'استعارة مكنية.',
+                            'استعارة تصريحية.',
+                            'مجاز مرسل.'
+                        ],
+                        correct: 1,
+                        explanation: 'استعارة مكنية حيث صوَّر الهمم بأشخاص تسمو وترتفع، وسر جمالها التشخيص.'
+                    },
+                    {
+                        q: 'ما نوع الأسلوب في قول الكاتب: «حَفِظَكُمُ اللهُ»؟',
+                        options: [
+                            'خبري للوصف والتقرير.',
+                            'إنشائي لإثارة المشاعر.',
+                            'خبري لفظًا إنشائي معنى غرضه الدعاء.',
+                            'قصر للتخصيص والتوكيد.'
+                        ],
+                        correct: 2,
+                        explanation: 'أسلوب خبري لفظًا إنشائي معنى غرضه الدعاء للكُتّاب، ويدل على تأثر الكاتب بروح الإسلام.'
+                    }
+                ]
+            }
+        };
+
+        let currentLessonKey = 'lesson1';
+        let currentFontSize = 22; // بالبكسل للنص الأدبي
+        let userAnswers = {};
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLesson(currentLessonKey);
+        });
+
+        // التبديل بين الدرسين
+        function switchLesson(key) {
+            currentLessonKey = key;
+            document.getElementById('searchInput').value = '';
+            
+            // تحديث مظهر التبويبات
+            document.querySelectorAll('.lesson-tab').forEach(btn => {
+                btn.classList.remove('bg-primary-700', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+            const activeTab = document.getElementById(`tab-${key}`);
+            activeTab.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            activeTab.classList.add('bg-primary-700', 'text-white', 'shadow-md');
+
+            renderLesson(key);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // عرض محتوى الدرس
+        function renderLesson(key, searchQuery = '') {
+            const lesson = lessonsData[key];
+            const container = document.getElementById('lessonContainer');
+            const q = searchQuery.trim().toLowerCase();
+
+            // تصفية المفردات والجماليات عند البحث
+            const filteredVocab = q 
+                ? lesson.vocab.filter(v => v.word.toLowerCase().includes(q) || v.meaning.toLowerCase().includes(q))
+                : lesson.vocab;
+
+            const filterAesthetics = (list) => q
+                ? list.filter(item => item.type.toLowerCase().includes(q) || item.quote.toLowerCase().includes(q) || item.explanation.toLowerCase().includes(q))
+                : list;
+
+            const bayanList = filterAesthetics(lesson.aesthetics.bayan);
+            const badiList = filterAesthetics(lesson.aesthetics.badi);
+            const maaniList = filterAesthetics(lesson.aesthetics.maani);
+
+            // بناء HTML للنص الأدبي
+            let textHtml = '';
+            if (lesson.textType === 'poetry') {
+                textHtml = `
+                    <div class="space-y-4">
+                        ${lesson.verses.map(v => `
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-8 p-3.5 rounded-2xl bg-slate-50/80 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/80 hover:border-amber-400/50 transition">
+                                <div class="flex items-center gap-3 w-full md:w-[48%] justify-between md:justify-start">
+                                    <span class="w-7 h-7 shrink-0 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 text-xs font-sans font-bold flex items-center justify-center">${v.num}</span>
+                                    <p class="literary-text font-bold text-slate-900 dark:text-slate-100 text-center md:text-right flex-1" style="font-size: ${currentFontSize}px">${v.first}</p>
+                                </div>
+                                <span class="hidden md:inline text-amber-500 font-serif text-xl">❖</span>
+                                <div class="w-full md:w-[48%]">
+                                    <p class="literary-text font-bold text-slate-900 dark:text-slate-100 text-center md:text-left" style="font-size: ${currentFontSize}px">${v.second}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                textHtml = `
+                    <div class="space-y-5 p-5 sm:p-7 rounded-2xl bg-amber-50/40 dark:bg-slate-800/40 border border-amber-200/60 dark:border-slate-700">
+                        ${lesson.paragraphs.map(p => `
+                            <p class="literary-text text-justify font-normal text-slate-900 dark:text-slate-100 indent-8" style="font-size: ${currentFontSize}px">
+                                ${p}
+                            </p>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <!-- بطاقة العنوان الرئيسية -->
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-l from-primary-900 via-primary-800 to-slate-900 text-white p-6 sm:p-10 shadow-xl">
+                    <div class="relative z-10">
+                        <span class="inline-block px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold mb-3">
+                            ${lesson.badge}
+                        </span>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold font-serif tracking-wide mb-2">
+                            ${lesson.title}
+                        </h2>
+                        <p class="text-primary-100 text-sm sm:text-base font-medium">
+                            ${lesson.subtitle}
+                        </p>
+                    </div>
+                    <!-- زخرفة خلفية -->
+                    <div class="absolute -left-10 -bottom-16 w-64 h-64 rounded-full bg-amber-500/10 blur-2xl pointer-events-none"></div>
+                    <div class="absolute left-8 top-6 font-serif text-8xl text-white/5 select-none pointer-events-none">«»</div>
+                </div>
+
+                <!-- ١. قسم النص الأدبي -->
+                <section id="sec-text" class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-100 dark:border-slate-800">
+                        <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 flex items-center gap-2">
+                            <span>📜</span>
+                            <span>النص الأدبي كاملًا مضبوطًا بالشكل</span>
+                        </h3>
+                        <button onclick="copyFullText()" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-primary-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                            <span id="copyBtnText">نسخ النص</span>
+                        </button>
+                    </div>
+                    ${textHtml}
+                </section>
+
+                <!-- ٢. قسم التعريف بالشاعر/الكاتب وسماته -->
+                <section id="sec-author" class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 mb-5 flex items-center gap-2">
+                        <span>👤</span>
+                        <span>${lesson.author.role}</span>
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 space-y-3">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">${lesson.author.name}</h4>
+                                <span class="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300">${lesson.author.lifespan}</span>
+                            </div>
+                            <ul class="space-y-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed list-disc list-inside">
+                                ${lesson.author.bio.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-5 border border-slate-200/70 dark:border-slate-700">
+                            <h5 class="text-sm font-extrabold text-amber-700 dark:text-amber-400 mb-3">أبرز سمات شخصيته:</h5>
+                            <div class="flex flex-wrap gap-2">
+                                ${lesson.author.traits.map(t => `
+                                    <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 shadow-xs">
+                                        ✦ ${t}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ٣. قسم الفكرة الرئيسية، المغزى، وسمات النص -->
+                <section id="sec-ideas" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- الفكرة والمغزى -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+                        <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 flex items-center gap-2">
+                            <span>💡</span>
+                            <span>الفكرة الرئيسية والمغزى</span>
+                        </h3>
+                        <div class="p-4 rounded-2xl bg-primary-50/70 dark:bg-primary-950/30 border border-primary-100 dark:border-primary-900/50">
+                            <span class="text-xs font-extrabold text-primary-700 dark:text-primary-300 block mb-1">الفكرة الرئيسية للنص:</span>
+                            <p class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-relaxed">${lesson.mainIdea.core}</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-extrabold text-amber-600 dark:text-amber-400 block mb-1">مناسبة النص وغرضه:</span>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${lesson.mainIdea.occasion}</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 block mb-1">المغزى والهدف من النص:</span>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${lesson.mainIdea.moral}</p>
+                        </div>
+                    </div>
+
+                    <!-- سمات النص الفنية -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 mb-5 flex items-center gap-2">
+                            <span>✒️</span>
+                            <span>سمات النص (الخصائص الفنية)</span>
+                        </h3>
+                        <ul class="space-y-3">
+                            ${lesson.textTraits.map((trait, idx) => `
+                                <li class="flex items-start gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                                    <span class="w-6 h-6 shrink-0 rounded-lg bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold text-xs flex items-center justify-center mt-0.5">${idx + 1}</span>
+                                    <span class="text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">${trait}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- ٤. قسم أهم المفردات -->
+                <section id="sec-vocab" class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                        <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 flex items-center gap-2">
+                            <span>📖</span>
+                            <span>أهم المفردات اللغوية</span>
+                        </h3>
+                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">عدد المفردات: ${filteredVocab.length}</span>
+                    </div>
+                    ${filteredVocab.length > 0 ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            ${filteredVocab.map(v => `
+                                <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/80 flex items-center justify-between gap-3 hover:border-primary-400 transition">
+                                    <span class="font-serif font-bold text-lg text-primary-800 dark:text-amber-300">${v.word}</span>
+                                    <span class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium text-left">${v.meaning}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `<p class="text-center text-sm text-slate-500 py-6">لا توجد مفردات مطابقة لعبارة البحث.</p>`}
+                </section>
+
+                <!-- ٥. قسم الجماليات والأساليب والمحسنات البديعية -->
+                <section id="sec-aesthetics" class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                    <h3 class="text-lg sm:text-xl font-extrabold text-primary-700 dark:text-amber-400 flex items-center gap-2">
+                        <span>✨</span>
+                        <span>الجماليات والأساليب والمحسنات البديعية</span>
+                    </h3>
+
+                    <!-- علم البيان -->
+                    <div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-primary-500"></span>
+                            <span>أولًا: علم البيان (التشبيه – الاستعارة – الكناية)</span>
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            ${bayanList.map(item => `
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-700 space-y-1.5">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-lg bg-primary-100 dark:bg-primary-900/60 text-primary-800 dark:text-primary-200">${item.type}</span>
+                                    </div>
+                                    <p class="font-serif font-bold text-base sm:text-lg text-slate-900 dark:text-amber-300">«${item.quote}»</p>
+                                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${item.explanation}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- علم البديع -->
+                    <div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                            <span>ثانيًا: علم البديع (المحسنات البديعية)</span>
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            ${badiList.map(item => `
+                                <div class="p-4 rounded-2xl bg-amber-50/40 dark:bg-slate-800/50 border border-amber-200/60 dark:border-slate-700 space-y-1.5">
+                                    <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300">${item.type}</span>
+                                    <p class="font-serif font-bold text-base sm:text-lg text-slate-900 dark:text-white">«${item.quote}»</p>
+                                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${item.explanation}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- علم المعاني وإيحاءات الألفاظ -->
+                    <div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            <span>ثالثًا: علم المعاني (الأساليب وإيحاءات الألفاظ)</span>
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            ${maaniList.map(item => `
+                                <div class="p-4 rounded-2xl bg-emerald-50/40 dark:bg-slate-800/50 border border-emerald-200/60 dark:border-slate-700 space-y-1.5">
+                                    <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300">${item.type}</span>
+                                    <p class="font-serif font-bold text-base sm:text-lg text-slate-900 dark:text-white">«${item.quote}»</p>
+                                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${item.explanation}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ٦. قسم التدريبات التفاعلية من الكتاب المقرر -->
+                <section id="sec-quiz" class="bg-gradient-to-br from-slate-900 to-primary-950 text-white rounded-3xl p-5 sm:p-8 shadow-lg">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-amber-400 flex items-center gap-2">
+                                <span>🎯</span>
+                                <span>تدريبات تفاعلية (من أسئلة الكتاب المقرر)</span>
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-1">اختر الإجابة الصحيحة لمعرفة التفسير البلاغي والأدبي الفوري.</p>
+                        </div>
+                        <button onclick="resetQuiz()" class="text-xs font-bold px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition">
+                            إعادة المحاولة
+                        </button>
+                    </div>
+
+                    <div class="space-y-5" id="quizContainer">
+                        ${lesson.quiz.map((qItem, qIdx) => {
+                            const selected = userAnswers[`${key}-${qIdx}`];
+                            return `
+                                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                                    <p class="font-bold text-sm sm:text-base text-white">
+                                        <span class="text-amber-400 ml-1">${qIdx + 1}.</span> ${qItem.q}
+                                    </p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                        ${qItem.options.map((opt, oIdx) => {
+                                            let btnStyle = 'bg-white/5 hover:bg-white/10 border-white/15 text-slate-200';
+                                            if (selected !== undefined) {
+                                                if (oIdx === qItem.correct) {
+                                                    btnStyle = 'bg-emerald-600/40 border-emerald-400 text-white font-bold';
+                                                } else if (oIdx === selected && selected !== qItem.correct) {
+                                                    btnStyle = 'bg-rose-600/40 border-rose-400 text-white';
+                                                } else {
+                                                    btnStyle = 'bg-white/5 border-white/10 opacity-50';
+                                                }
+                                            }
+                                            return `
+                                                <button onclick="selectAnswer(${qIdx}, ${oIdx})" class="text-right p-3 rounded-xl border text-xs sm:text-sm transition ${btnStyle}">
+                                                    ${opt}
+                                                </button>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                    ${selected !== undefined ? `
+                                        <div class="mt-3 p-3 rounded-xl text-xs sm:text-sm ${selected === qItem.correct ? 'bg-emerald-950/80 text-emerald-200 border border-emerald-700/50' : 'bg-rose-950/80 text-rose-200 border border-rose-700/50'}">
+                                            <strong>${selected === qItem.correct ? '✔ إجابة صحيحة:' : '✘ إجابة غير دقيقة:'}</strong> ${qItem.explanation}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </section>
+            `;
+        }
+
+        // اختيار إجابة في الاختبار
+        function selectAnswer(qIdx, oIdx) {
+            userAnswers[`${currentLessonKey}-${qIdx}`] = oIdx;
+            renderLesson(currentLessonKey, document.getElementById('searchInput').value);
+        }
+
+        // إعادة تعيين الاختبار
+        function resetQuiz() {
+            const lesson = lessonsData[currentLessonKey];
+            lesson.quiz.forEach((_, idx) => {
+                delete userAnswers[`${currentLessonKey}-${idx}`];
+            });
+            renderLesson(currentLessonKey, document.getElementById('searchInput').value);
+        }
+
+        // البحث الفوري
+        function handleSearch(val) {
+            renderLesson(currentLessonKey, val);
+        }
+
+        // التحكم في حجم الخط
+        function changeFontSize(delta) {
+            currentFontSize = Math.min(32, Math.max(16, currentFontSize + delta * 2));
+            document.querySelectorAll('.literary-text').forEach(el => {
+                el.style.fontSize = `${currentFontSize}px`;
+            });
+        }
+
+        // تبديل الوضع الليلي/النهاري
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // نسخ النص الأدبي كاملًا (متوافق مع القيود الأمنية)
+        function copyFullText() {
+            const lesson = lessonsData[currentLessonKey];
+            let rawText = `${lesson.title} - ${lesson.subtitle}\n\n`;
+            if (lesson.textType === 'poetry') {
+                rawText += lesson.verses.map(v => `${v.first}   ***   ${v.second}`).join('\n');
+            } else {
+                rawText += lesson.paragraphs.join('\n\n');
+            }
+            rawText += `\n\nجميع الحقوق محفوظة © عبدالرحمن عبدالله`;
+
+            const tempArea = document.createElement('textarea');
+            tempArea.value = rawText;
+            document.body.appendChild(tempArea);
+            tempArea.select();
+            try {
+                document.execCommand('copy');
+                const btnText = document.getElementById('copyBtnText');
+                btnText.innerText = 'تم النسخ ✔';
+                setTimeout(() => { btnText.innerText = 'نسخ النص'; }, 2000);
+            } catch (e) {
+                console.error('Copy failed', e);
+            }
+            document.body.removeChild(tempArea);
+        }
+    </script>
+</body>
+</html>
